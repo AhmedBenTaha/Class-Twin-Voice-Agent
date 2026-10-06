@@ -1,0 +1,19 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Local vector database
+chroma_db/
+
+# Audio samples - NEVER publish
+twin_data/voice/*
+!twin_data/voice/.gitkeep
+
+# Test recordings
+tests/audio/*.wav
+tests/audio/*.mp3
+
+# Generated audio
+results/audio/

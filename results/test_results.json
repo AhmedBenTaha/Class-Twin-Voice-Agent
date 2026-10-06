@@ -1,0 +1,492 @@
+{
+  "summary": {
+    "total_tests": 8,
+    "passed": 8,
+    "failed": 0,
+    "accuracy": 1.0
+  },
+  "tests": [
+    {
+      "id": "T01",
+      "name": "English addressed question",
+      "input": "Ahmed, what's the difference between RAG and fine-tuning?",
+      "expected": {
+        "action": "answer",
+        "addressed_to_me": true
+      },
+      "actual": {
+        "action": "answer",
+        "addressed_to_me": true,
+        "language": "en",
+        "reply_text": "In short, RAG (Retrieval‑Augmented Generation) pulls relevant information from an external source at inference time and feeds it to the LLM as context, while fine‑tuning actually updates the model’s weights by training it on a specific dataset. \n\nTechnical details: RAG typically uses a vector database to store embeddings of documents, performs a similarity search, and concatenates the retrieved passages to the prompt before generation—great for knowledge that changes frequently. Fine‑tuning involves an additional training phase where you expose the pretrained model to new examples to alter its behavior, style, or learned patterns; the changes become permanent in the model but require compute and a curated dataset. Choose RAG when you need up‑to‑date or domain‑specific info without retraining, and fine‑tuning when you want the model itself to internalize new patterns or capabilities.",
+        "confidence": 0.98,
+        "follow_up": false,
+        "tools_used": [
+          "search_my_notes",
+          "get_style_examples",
+          "get_profile"
+        ],
+        "sources": [
+          "RAG",
+          "fine-tuning"
+        ],
+        "tool_calls": [
+          {
+            "tool": "search_my_notes",
+            "args": {
+              "query": "Ahmed, what's the difference between RAG and fine-tuning?"
+            }
+          },
+          {
+            "tool": "get_style_examples",
+            "args": {
+              "question": "Ahmed, what's the difference between RAG and fine-tuning?",
+              "language": "en"
+            }
+          },
+          {
+            "tool": "get_profile",
+            "args": {}
+          }
+        ],
+        "decision_reason": "Question passed cheap checks and the LLM selected the highest-confidence action.",
+        "pruned_branches": [
+          "defer",
+          "ask_to_repeat",
+          "stay_silent"
+        ],
+        "remaining_branches": [
+          "answer"
+        ],
+        "timings": {
+          "decision_total_seconds": 1.157,
+          "decision_llm_seconds": 1.157,
+          "tool_and_graph_seconds": 0.059,
+          "answer_llm_seconds": 1.712
+        }
+      },
+      "validation": {
+        "action_pass": true,
+        "addressed_pass": true,
+        "passed": true
+      },
+      "setup_memory": [],
+      "setup_reply": null
+    },
+    {
+      "id": "T02",
+      "name": "Egyptian Arabic addressed question",
+      "input": "يا أحمد، إيه الفرق بين الـ RAG والـ fine-tuning؟",
+      "expected": {
+        "action": "answer",
+        "addressed_to_me": true
+      },
+      "actual": {
+        "action": "answer",
+        "addressed_to_me": true,
+        "language": "mixed",
+        "reply_text": "بص، الفرق الأساسي إن الـRAG بيخلّي الـLLM يجيب معلومات من مصدر خارجي وقت الـinference ويضيفها للـcontext قبل ما يولّد الرد، بينما الـfine‑tuning بيغيّر وزن الـmodel نفسه عن طريق تدريب إضافي على بيانات معينة. \n\nتقنيًا، الـRAG بيشتغل بخطوتين: أولًا بنعمل embeddings للـdocuments ونخزنها في vector database، وبعدين بنعمل similarity search للـquery ونجيب الـrelevant chunks ونقدّمها للـLLM. التحديثات في المعرفة بتكون بس في الـexternal store. أما الـfine‑tuning فبيحتاج نعيد تدريب الـpre‑trained model على مجموعة data جديدة، وده بيعدل الـparameters وبيحسّن الـbehavior أو الـstyle أو بيضيف knowledge داخل الـmodel، لكن بيستهلك موارد وبيمكّن خطر الـcatastrophic forgetting.",
+        "confidence": 0.99,
+        "follow_up": false,
+        "tools_used": [
+          "search_my_notes",
+          "get_style_examples",
+          "get_profile"
+        ],
+        "sources": [
+          "RAG",
+          "fine-tuning"
+        ],
+        "tool_calls": [
+          {
+            "tool": "search_my_notes",
+            "args": {
+              "query": "يا أحمد، إيه الفرق بين الـ RAG والـ fine-tuning؟"
+            }
+          },
+          {
+            "tool": "get_style_examples",
+            "args": {
+              "question": "يا أحمد، إيه الفرق بين الـ RAG والـ fine-tuning؟",
+              "language": "mixed"
+            }
+          },
+          {
+            "tool": "get_profile",
+            "args": {}
+          }
+        ],
+        "decision_reason": "Question passed cheap checks and the LLM selected the highest-confidence action.",
+        "pruned_branches": [
+          "defer",
+          "ask_to_repeat",
+          "stay_silent"
+        ],
+        "remaining_branches": [
+          "answer"
+        ],
+        "timings": {
+          "decision_total_seconds": 0.726,
+          "decision_llm_seconds": 0.726,
+          "tool_and_graph_seconds": 0.008,
+          "answer_llm_seconds": 1.236
+        }
+      },
+      "validation": {
+        "action_pass": true,
+        "addressed_pass": true,
+        "passed": true
+      },
+      "setup_memory": [],
+      "setup_reply": null
+    },
+    {
+      "id": "T03",
+      "name": "Mixed language question",
+      "input": "يا أحمد، ممكن تشرحلنا الـ pruning في الـ decision tree بيعمل إيه؟",
+      "expected": {
+        "action": "answer",
+        "addressed_to_me": true
+      },
+      "actual": {
+        "action": "answer",
+        "addressed_to_me": true,
+        "language": "mixed",
+        "reply_text": "بص، الـ pruning في الـ decision tree هو ببساطة عملية تقليل حجم الشجرة عشان ما تتعلمش تفاصيل زيادة وتسبب الـ overfitting. بنشيل الفروع اللي ما بتضيفش قيمة حقيقية للـ prediction.\n\nتقنيًا، فيه نوعين: \n- **Pre‑pruning**: بنوقف النمو بتاع الشجرة قبل ما الفروع تبقى عميقة جداً، زي ما بنحدد حد أقصى للـ depth أو الحد الأدنى للـ samples في leaf. \n- **Post‑pruning** (أو cost‑complexity pruning): بنبني الشجرة بالكامل الأول، بعدين بنقيم الفروع على validation set أو باستخدام معيار زي α‑complexity، ونشيل الفروع اللي تحسين الـ error مش كبير مقارنةً بزيادة التعقيد. النتيجة شجرة أبسط، أسرع في الـ inference، وأقل عرضة للـ overfitting.",
+        "confidence": 0.92,
+        "follow_up": false,
+        "tools_used": [
+          "search_my_notes",
+          "get_style_examples",
+          "get_profile"
+        ],
+        "sources": [
+          "decision tree pruning"
+        ],
+        "tool_calls": [
+          {
+            "tool": "search_my_notes",
+            "args": {
+              "query": "يا أحمد، ممكن تشرحلنا الـ pruning في الـ decision tree بيعمل إيه؟"
+            }
+          },
+          {
+            "tool": "get_style_examples",
+            "args": {
+              "question": "يا أحمد، ممكن تشرحلنا الـ pruning في الـ decision tree بيعمل إيه؟",
+              "language": "mixed"
+            }
+          },
+          {
+            "tool": "get_profile",
+            "args": {}
+          }
+        ],
+        "decision_reason": "Question passed cheap checks and the LLM selected the highest-confidence action.",
+        "pruned_branches": [
+          "defer",
+          "ask_to_repeat",
+          "stay_silent"
+        ],
+        "remaining_branches": [
+          "answer"
+        ],
+        "timings": {
+          "decision_total_seconds": 0.816,
+          "decision_llm_seconds": 0.816,
+          "tool_and_graph_seconds": 0.014,
+          "answer_llm_seconds": 1.215
+        }
+      },
+      "validation": {
+        "action_pass": true,
+        "addressed_pass": true,
+        "passed": true
+      },
+      "setup_memory": [],
+      "setup_reply": null
+    },
+    {
+      "id": "T04",
+      "name": "Question addressed to another person",
+      "input": "Sara, can you share your screen?",
+      "expected": {
+        "action": "stay_silent",
+        "addressed_to_me": false
+      },
+      "actual": {
+        "action": "stay_silent",
+        "addressed_to_me": false,
+        "language": "en",
+        "reply_text": "",
+        "confidence": 0.98,
+        "follow_up": false,
+        "tools_used": [],
+        "sources": [],
+        "tool_calls": [],
+        "decision_reason": "The question is addressed to another person.",
+        "pruned_branches": [
+          "answer",
+          "ask_to_repeat",
+          "defer"
+        ],
+        "remaining_branches": [
+          "stay_silent"
+        ],
+        "timings": {
+          "decision_total_seconds": 0.0,
+          "decision_llm_seconds": 0.0
+        }
+      },
+      "validation": {
+        "action_pass": true,
+        "addressed_pass": true,
+        "passed": true
+      },
+      "setup_memory": [],
+      "setup_reply": null
+    },
+    {
+      "id": "T05",
+      "name": "Open question to the class",
+      "input": "Anyone? What does a CycleError mean?",
+      "expected": {
+        "action": "defer",
+        "addressed_to_me": false
+      },
+      "actual": {
+        "action": "defer",
+        "addressed_to_me": false,
+        "language": "en",
+        "reply_text": "I'm not sure about that from the information I have.",
+        "confidence": 0.85,
+        "follow_up": false,
+        "tools_used": [],
+        "sources": [],
+        "tool_calls": [],
+        "decision_reason": "The topic is outside the current Phase 1 knowledge pack.",
+        "pruned_branches": [
+          "answer",
+          "stay_silent",
+          "ask_to_repeat"
+        ],
+        "remaining_branches": [
+          "defer"
+        ],
+        "timings": {
+          "decision_total_seconds": 0.0,
+          "decision_llm_seconds": 0.0
+        }
+      },
+      "validation": {
+        "action_pass": true,
+        "addressed_pass": true,
+        "passed": true
+      },
+      "setup_memory": [],
+      "setup_reply": null
+    },
+    {
+      "id": "T06",
+      "name": "Follow-up memory",
+      "input": "Ahmed, and how is that different from what you said earlier?",
+      "expected": {
+        "action": "answer",
+        "addressed_to_me": true
+      },
+      "actual": {
+        "action": "answer",
+        "addressed_to_me": true,
+        "language": "en",
+        "reply_text": "The core difference is that RAG brings in external information at inference time, whereas fine‑tuning actually changes the model’s weights. \n\nTechnical details: With RAG you store documents as embeddings in a vector database, retrieve the most relevant chunks, and prepend them to the prompt so the LLM can generate answers using up‑to‑date context without any weight updates. Fine‑tuning runs additional gradient steps on a pretrained model with a curated dataset, permanently altering its parameters to internalize new knowledge, style, or behavior.",
+        "confidence": 0.9,
+        "follow_up": true,
+        "tools_used": [
+          "search_my_notes",
+          "get_style_examples",
+          "get_profile"
+        ],
+        "sources": [
+          "RAG",
+          "previous conversation"
+        ],
+        "tool_calls": [
+          {
+            "tool": "search_my_notes",
+            "args": {
+              "query": "Ahmed, and how is that different from what you said earlier?"
+            }
+          },
+          {
+            "tool": "get_style_examples",
+            "args": {
+              "question": "Ahmed, and how is that different from what you said earlier?",
+              "language": "en"
+            }
+          },
+          {
+            "tool": "get_profile",
+            "args": {}
+          }
+        ],
+        "decision_reason": "Question passed cheap checks and the LLM selected the highest-confidence action.",
+        "pruned_branches": [
+          "defer",
+          "ask_to_repeat",
+          "stay_silent"
+        ],
+        "remaining_branches": [
+          "answer"
+        ],
+        "timings": {
+          "decision_total_seconds": 6.139,
+          "decision_llm_seconds": 6.139,
+          "tool_and_graph_seconds": 0.013,
+          "answer_llm_seconds": 19.02
+        }
+      },
+      "validation": {
+        "action_pass": true,
+        "addressed_pass": true,
+        "passed": true
+      },
+      "setup_memory": [
+        {
+          "question": "Ahmed, what's the difference between RAG and fine-tuning?",
+          "reply": "In short, RAG (Retrieval‑Augmented Generation) pulls relevant information from an external source at inference time and feeds it to the LLM as context, while fine‑tuning actually updates the model’s weights by training it on a specific dataset. \n\nTechnical details: With RAG you typically store documents as embeddings in a vector database, retrieve the most similar chunks, and prepend them to the prompt so the model can generate answers based on up‑to‑date knowledge without changing its parameters. Fine‑tuning involves additional gradient updates on a pretrained model using a curated dataset to alter its behavior, style, or learned patterns, effectively creating a new version of the model that internalizes that information."
+        }
+      ],
+      "setup_reply": {
+        "addressed_to_me": true,
+        "action": "answer",
+        "language": "en",
+        "reply_text": "In short, RAG (Retrieval‑Augmented Generation) pulls relevant information from an external source at inference time and feeds it to the LLM as context, while fine‑tuning actually updates the model’s weights by training it on a specific dataset. \n\nTechnical details: With RAG you typically store documents as embeddings in a vector database, retrieve the most similar chunks, and prepend them to the prompt so the model can generate answers based on up‑to‑date knowledge without changing its parameters. Fine‑tuning involves additional gradient updates on a pretrained model using a curated dataset to alter its behavior, style, or learned patterns, effectively creating a new version of the model that internalizes that information.",
+        "confidence": 0.97,
+        "tools_used": [
+          "search_my_notes",
+          "get_style_examples",
+          "get_profile"
+        ],
+        "sources": [
+          "RAG",
+          "fine-tuning"
+        ],
+        "decision_reason": "Question passed cheap checks and the LLM selected the highest-confidence action.",
+        "pruned_branches": [
+          "defer",
+          "ask_to_repeat",
+          "stay_silent"
+        ],
+        "remaining_branches": [
+          "answer"
+        ],
+        "follow_up": false,
+        "tool_calls": [
+          {
+            "tool": "search_my_notes",
+            "args": {
+              "query": "Ahmed, what's the difference between RAG and fine-tuning?"
+            }
+          },
+          {
+            "tool": "get_style_examples",
+            "args": {
+              "question": "Ahmed, what's the difference between RAG and fine-tuning?",
+              "language": "en"
+            }
+          },
+          {
+            "tool": "get_profile",
+            "args": {}
+          }
+        ],
+        "timings": {
+          "decision_total_seconds": 0.594,
+          "decision_llm_seconds": 0.594,
+          "tool_and_graph_seconds": 0.015,
+          "answer_llm_seconds": 15.468
+        }
+      }
+    },
+    {
+      "id": "T07",
+      "name": "Outside knowledge",
+      "input": "Ahmed, how did your assignment use Kubernetes?",
+      "expected": {
+        "action": "defer",
+        "addressed_to_me": true
+      },
+      "actual": {
+        "action": "defer",
+        "addressed_to_me": true,
+        "language": "en",
+        "reply_text": "I'm not sure about that from the information I have.",
+        "confidence": 0.85,
+        "follow_up": false,
+        "tools_used": [],
+        "sources": [],
+        "tool_calls": [],
+        "decision_reason": "The topic is outside the current Phase 1 knowledge pack.",
+        "pruned_branches": [
+          "answer",
+          "stay_silent",
+          "ask_to_repeat"
+        ],
+        "remaining_branches": [
+          "defer"
+        ],
+        "timings": {
+          "decision_total_seconds": 0.0,
+          "decision_llm_seconds": 0.0
+        }
+      },
+      "validation": {
+        "action_pass": true,
+        "addressed_pass": true,
+        "passed": true
+      },
+      "setup_memory": [],
+      "setup_reply": null
+    },
+    {
+      "id": "T08",
+      "name": "Low quality / unclear audio policy",
+      "input": "[UNCLEAR AUDIO]",
+      "expected": {
+        "action": "ask_to_repeat",
+        "addressed_to_me": false
+      },
+      "actual": {
+        "action": "ask_to_repeat",
+        "addressed_to_me": false,
+        "language": "en",
+        "reply_text": "Sorry, could you repeat the question?",
+        "confidence": 0.95,
+        "follow_up": false,
+        "tools_used": [],
+        "sources": [],
+        "tool_calls": [],
+        "decision_reason": "Audio/transcription quality is too low.",
+        "pruned_branches": [
+          "answer",
+          "defer",
+          "stay_silent"
+        ],
+        "remaining_branches": [
+          "ask_to_repeat"
+        ],
+        "timings": {
+          "decision_total_seconds": 0.0,
+          "decision_llm_seconds": 0.0
+        }
+      },
+      "validation": {
+        "action_pass": true,
+        "addressed_pass": true,
+        "passed": true
+      },
+      "setup_memory": [],
+      "setup_reply": null
+    }
+  ]
+}

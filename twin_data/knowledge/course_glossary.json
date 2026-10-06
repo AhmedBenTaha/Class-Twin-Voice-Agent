@@ -1,0 +1,12 @@
+{
+  "RAG": "Retrieval-Augmented Generation: a technique where relevant information is retrieved from an external knowledge source and provided to an LLM as context before generating an answer.",
+  "fine-tuning": "Additional training of a pretrained model on a specific dataset to change behavior, style, or learned patterns.",
+  "AI agent": "A system that has a goal and can decide which steps or tools to use to achieve that goal.",
+  "workflow": "A predefined sequence of steps executed in a known order.",
+  "LangGraph": "A framework for building stateful and multi-step AI applications using nodes and edges.",
+  "tool calling": "A mechanism that allows an LLM to request the execution of an external tool.",
+  "hallucination": "When an LLM generates information that sounds plausible but is incorrect or unsupported.",
+  "vector database": "A database optimized for storing and searching vector representations using similarity.",
+  "embedding": "A numerical vector representation of data such as text or images that captures semantic characteristics.",
+  "decision tree pruning": "A technique used to reduce the complexity of a decision tree and help prevent overfitting."
+}

@@ -1,0 +1,51 @@
+{
+  "audio": "twin_data/voice/recordings/Q01_rag.m4a",
+  "text": " What is the reg? بص ال reg ببساطة واختصار Retrieval Augmented Generation. الفكرة اننا بدلا ما نعتمد على ال LM الوحده بنخليه الاول يدور على ال information من المصدر خارجي زي ال documentus او ال database. بعد كده بياخد ال relevant information دي ويحطها في ال context بتاعه. ويستخدمها عشان يكون الاجابة. وده بيساعدنا ان الاجابات تبقى ممنية على داتا موجودة عندنا وكمان يقلد",
+  "language": "Arabic",
+  "detected_language": "mixed",
+  "quality_score": 0.939,
+  "segments": [
+    {
+      "start": 0,
+      "end": 10.5,
+      "text": " What is the reg? بص ال reg ببساطة واختصار Retrieval Augmented Generation.",
+      "avg_logprob": -0.35476822,
+      "no_speech_prob": 0
+    },
+    {
+      "start": 10.5,
+      "end": 16.5,
+      "text": " الفكرة اننا بدلا ما نعتمد على ال LM الوحده بنخليه الاول يدور على",
+      "avg_logprob": -0.35476822,
+      "no_speech_prob": 0
+    },
+    {
+      "start": 16.5,
+      "end": 21,
+      "text": " ال information من المصدر خارجي زي ال documentus او ال database. بعد كده",
+      "avg_logprob": -0.35476822,
+      "no_speech_prob": 0
+    },
+    {
+      "start": 21,
+      "end": 29.5,
+      "text": " بياخد ال relevant information دي ويحطها في ال context بتاعه. ويستخدمها",
+      "avg_logprob": -0.35476822,
+      "no_speech_prob": 0
+    },
+    {
+      "start": 29.5,
+      "end": 34.48,
+      "text": " عشان يكون الاجابة. وده بيساعدنا ان الاجابات تبقى ممنية على",
+      "avg_logprob": -0.21253213,
+      "no_speech_prob": 0
+    },
+    {
+      "start": 34.48,
+      "end": 39.3,
+      "text": " داتا موجودة عندنا وكمان يقلد",
+      "avg_logprob": -0.21253213,
+      "no_speech_prob": 0
+    }
+  ]
+}
