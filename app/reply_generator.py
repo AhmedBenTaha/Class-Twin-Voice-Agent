@@ -449,7 +449,8 @@ in the previous conversation.
         {
             "text": decision_question,
             "quality_score": quality_score,
-        }
+        },
+        has_memory=bool(previous_memory),
     )
 
     decision_seconds = round(

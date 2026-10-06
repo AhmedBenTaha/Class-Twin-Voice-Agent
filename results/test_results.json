@@ -18,8 +18,8 @@
         "action": "answer",
         "addressed_to_me": true,
         "language": "en",
-        "reply_text": "In short, RAG (Retrieval‑Augmented Generation) pulls relevant information from an external source at inference time and feeds it to the LLM as context, while fine‑tuning actually updates the model’s weights by training it on a specific dataset. \n\nTechnical details: RAG typically uses a vector database to store embeddings of documents, performs a similarity search, and concatenates the retrieved passages to the prompt before generation—great for knowledge that changes frequently. Fine‑tuning involves an additional training phase where you expose the pretrained model to new examples to alter its behavior, style, or learned patterns; the changes become permanent in the model but require compute and a curated dataset. Choose RAG when you need up‑to‑date or domain‑specific info without retraining, and fine‑tuning when you want the model itself to internalize new patterns or capabilities.",
-        "confidence": 0.98,
+        "reply_text": "In short, RAG (Retrieval‑Augmented Generation) doesn’t change the model itself – it pulls relevant info from an external source at inference time and feeds that into the LLM as context. Fine‑tuning, on the other hand, actually updates the model’s weights by training it further on a specific dataset.\n\nTechnical details: With RAG you typically use a vector database and embeddings to retrieve documents or chunks that match the query, then concatenate those retrieved passages to the prompt before the LLM generates an answer. This is great for constantly changing or proprietary knowledge because you only update the index, not the model. Fine‑tuning involves additional gradient updates on a pre‑trained model using your own data, which can alter its behavior, style, or learned patterns. It requires compute resources and careful handling to avoid over‑fitting or catastrophic forgetting, but once done the model can produce the desired outputs without needing external retrieval at runtime.",
+        "confidence": 0.97,
         "follow_up": false,
         "tools_used": [
           "search_my_notes",
@@ -51,18 +51,18 @@
         ],
         "decision_reason": "Question passed cheap checks and the LLM selected the highest-confidence action.",
         "pruned_branches": [
-          "defer",
           "ask_to_repeat",
+          "defer",
           "stay_silent"
         ],
         "remaining_branches": [
           "answer"
         ],
         "timings": {
-          "decision_total_seconds": 1.157,
-          "decision_llm_seconds": 1.157,
-          "tool_and_graph_seconds": 0.059,
-          "answer_llm_seconds": 1.712
+          "decision_total_seconds": 0.968,
+          "decision_llm_seconds": 0.968,
+          "tool_and_graph_seconds": 2.412,
+          "answer_llm_seconds": 1.609
         }
       },
       "validation": {
@@ -85,8 +85,8 @@
         "action": "answer",
         "addressed_to_me": true,
         "language": "mixed",
-        "reply_text": "بص، الفرق الأساسي إن الـRAG بيخلّي الـLLM يجيب معلومات من مصدر خارجي وقت الـinference ويضيفها للـcontext قبل ما يولّد الرد، بينما الـfine‑tuning بيغيّر وزن الـmodel نفسه عن طريق تدريب إضافي على بيانات معينة. \n\nتقنيًا، الـRAG بيشتغل بخطوتين: أولًا بنعمل embeddings للـdocuments ونخزنها في vector database، وبعدين بنعمل similarity search للـquery ونجيب الـrelevant chunks ونقدّمها للـLLM. التحديثات في المعرفة بتكون بس في الـexternal store. أما الـfine‑tuning فبيحتاج نعيد تدريب الـpre‑trained model على مجموعة data جديدة، وده بيعدل الـparameters وبيحسّن الـbehavior أو الـstyle أو بيضيف knowledge داخل الـmodel، لكن بيستهلك موارد وبيمكّن خطر الـcatastrophic forgetting.",
-        "confidence": 0.99,
+        "reply_text": "بص، الفرق الأساسي إن الـRAG مش بيغيّر الـmodel نفسه – هو بيديله معلومات إضافية وقت الـinference من مصدر knowledge خارجي (مثلاً قاعدة docs أو vector DB) وبعدين بيخلّي الـLLM يولّد الجواب. أما الـfine-tuning فبيعمل training إضافي على الـmodel باستخدام dataset معينة عشان يغيّر الـbehavior أو يضيف knowledge ثابتة داخل الـweights.\n\nتقنيًا، الـRAG بيستخدم retrieval (embeddings + similarity search) عشان يجيب الـrelevant chunks، يحطهم في الـcontext ويولّد الـoutput. الـfine-tuning بيحتاج optimizer، learning‑rate، وبيحدّث الـparameters مباشرة، فبيكون مناسب لو عايز تحسّن الـstyle أو تتعلم pattern جديد مش متغيّر بسرعة.",
+        "confidence": 0.96,
         "follow_up": false,
         "tools_used": [
           "search_my_notes",
@@ -118,18 +118,18 @@
         ],
         "decision_reason": "Question passed cheap checks and the LLM selected the highest-confidence action.",
         "pruned_branches": [
-          "defer",
           "ask_to_repeat",
+          "defer",
           "stay_silent"
         ],
         "remaining_branches": [
           "answer"
         ],
         "timings": {
-          "decision_total_seconds": 0.726,
-          "decision_llm_seconds": 0.726,
-          "tool_and_graph_seconds": 0.008,
-          "answer_llm_seconds": 1.236
+          "decision_total_seconds": 1.228,
+          "decision_llm_seconds": 1.228,
+          "tool_and_graph_seconds": 0.025,
+          "answer_llm_seconds": 1.51
         }
       },
       "validation": {
@@ -152,8 +152,8 @@
         "action": "answer",
         "addressed_to_me": true,
         "language": "mixed",
-        "reply_text": "بص، الـ pruning في الـ decision tree هو ببساطة عملية تقليل حجم الشجرة عشان ما تتعلمش تفاصيل زيادة وتسبب الـ overfitting. بنشيل الفروع اللي ما بتضيفش قيمة حقيقية للـ prediction.\n\nتقنيًا، فيه نوعين: \n- **Pre‑pruning**: بنوقف النمو بتاع الشجرة قبل ما الفروع تبقى عميقة جداً، زي ما بنحدد حد أقصى للـ depth أو الحد الأدنى للـ samples في leaf. \n- **Post‑pruning** (أو cost‑complexity pruning): بنبني الشجرة بالكامل الأول، بعدين بنقيم الفروع على validation set أو باستخدام معيار زي α‑complexity، ونشيل الفروع اللي تحسين الـ error مش كبير مقارنةً بزيادة التعقيد. النتيجة شجرة أبسط، أسرع في الـ inference، وأقل عرضة للـ overfitting.",
-        "confidence": 0.92,
+        "reply_text": "آه طبعًا. الـ pruning ببساطة بنستخدمه عشان نقلل تعقيد الـ Decision Tree ونمنع الـ overfitting. لما الشجرة تكبر جدًا بتبدأ تحفظ الـ training data بدل ما تتعلم patterns عامة، فالـ pruning بيشيل الفروع أو الـ nodes اللي ما لهاش تأثير كبير على الـ prediction. \n\nتقنيًا، فيه نوعين رئيسيين: \n- **Pre‑pruning** (early stopping): بنوقف نمو الشجرة لو الـ impurity ما بتحسنش بعد كده أو لو عدد الـ samples في الـ node أقل من حد معين. \n- **Post‑pruning** (cost‑complexity pruning): بنبني الشجرة بالكامل الأول، بعدين بنقيم كل فرع على validation set أو باستخدام معيار زي **α‑complexity**، ونشيل الفروع اللي ما بتحسنش الـ error بشكل ملحوظ. النتيجة بتكون شجرة أصغر، أسرع في الـ inference، وتقدر تعمم أحسن على بيانات جديدة.",
+        "confidence": 0.97,
         "follow_up": false,
         "tools_used": [
           "search_my_notes",
@@ -184,18 +184,18 @@
         ],
         "decision_reason": "Question passed cheap checks and the LLM selected the highest-confidence action.",
         "pruned_branches": [
-          "defer",
           "ask_to_repeat",
+          "defer",
           "stay_silent"
         ],
         "remaining_branches": [
           "answer"
         ],
         "timings": {
-          "decision_total_seconds": 0.816,
-          "decision_llm_seconds": 0.816,
-          "tool_and_graph_seconds": 0.014,
-          "answer_llm_seconds": 1.215
+          "decision_total_seconds": 0.818,
+          "decision_llm_seconds": 0.818,
+          "tool_and_graph_seconds": 0.021,
+          "answer_llm_seconds": 1.516
         }
       },
       "validation": {
@@ -298,8 +298,8 @@
         "action": "answer",
         "addressed_to_me": true,
         "language": "en",
-        "reply_text": "The core difference is that RAG brings in external information at inference time, whereas fine‑tuning actually changes the model’s weights. \n\nTechnical details: With RAG you store documents as embeddings in a vector database, retrieve the most relevant chunks, and prepend them to the prompt so the LLM can generate answers using up‑to‑date context without any weight updates. Fine‑tuning runs additional gradient steps on a pretrained model with a curated dataset, permanently altering its parameters to internalize new knowledge, style, or behavior.",
-        "confidence": 0.9,
+        "reply_text": "The core difference is where the change happens. RAG keeps the LLM unchanged and pulls in fresh info at query time, while fine‑tuning actually rewrites the model weights. So with RAG you query a vector database or other knowledge source, embed the retrieved passages, and prepend them to the prompt – the model still uses its original parameters. Fine‑tuning, on the other hand, runs an extra training step on a specific dataset, updating the model’s parameters so the new knowledge becomes part of the model itself. Use RAG for dynamic or proprietary data you don’t want to bake into the model, and fine‑tuning when you need the model to internalize patterns or behavior permanently.",
+        "confidence": 0.85,
         "follow_up": true,
         "tools_used": [
           "search_my_notes",
@@ -307,7 +307,7 @@
           "get_profile"
         ],
         "sources": [
-          "RAG",
+          "RAG definition",
           "previous conversation"
         ],
         "tool_calls": [
@@ -331,18 +331,18 @@
         ],
         "decision_reason": "Question passed cheap checks and the LLM selected the highest-confidence action.",
         "pruned_branches": [
-          "defer",
           "ask_to_repeat",
+          "defer",
           "stay_silent"
         ],
         "remaining_branches": [
           "answer"
         ],
         "timings": {
-          "decision_total_seconds": 6.139,
-          "decision_llm_seconds": 6.139,
-          "tool_and_graph_seconds": 0.013,
-          "answer_llm_seconds": 19.02
+          "decision_total_seconds": 7.795,
+          "decision_llm_seconds": 7.794,
+          "tool_and_graph_seconds": 0.019,
+          "answer_llm_seconds": 16.046
         }
       },
       "validation": {
@@ -353,14 +353,14 @@
       "setup_memory": [
         {
           "question": "Ahmed, what's the difference between RAG and fine-tuning?",
-          "reply": "In short, RAG (Retrieval‑Augmented Generation) pulls relevant information from an external source at inference time and feeds it to the LLM as context, while fine‑tuning actually updates the model’s weights by training it on a specific dataset. \n\nTechnical details: With RAG you typically store documents as embeddings in a vector database, retrieve the most similar chunks, and prepend them to the prompt so the model can generate answers based on up‑to‑date knowledge without changing its parameters. Fine‑tuning involves additional gradient updates on a pretrained model using a curated dataset to alter its behavior, style, or learned patterns, effectively creating a new version of the model that internalizes that information."
+          "reply": "In short, RAG adds external information at inference time, while fine‑tuning actually changes the model weights. With Retrieval‑Augmented Generation (RAG) you keep the pretrained LLM unchanged, query a vector database or other knowledge source, and prepend the retrieved passages to the prompt so the model can use up‑to‑date facts. Fine‑tuning, on the other hand, involves additional training on a specific dataset, updating the model parameters to alter its behavior, style, or learned patterns. Use RAG when the knowledge is dynamic or proprietary, and fine‑tuning when you need the model itself to internalize new patterns or capabilities."
         }
       ],
       "setup_reply": {
         "addressed_to_me": true,
         "action": "answer",
         "language": "en",
-        "reply_text": "In short, RAG (Retrieval‑Augmented Generation) pulls relevant information from an external source at inference time and feeds it to the LLM as context, while fine‑tuning actually updates the model’s weights by training it on a specific dataset. \n\nTechnical details: With RAG you typically store documents as embeddings in a vector database, retrieve the most similar chunks, and prepend them to the prompt so the model can generate answers based on up‑to‑date knowledge without changing its parameters. Fine‑tuning involves additional gradient updates on a pretrained model using a curated dataset to alter its behavior, style, or learned patterns, effectively creating a new version of the model that internalizes that information.",
+        "reply_text": "In short, RAG adds external information at inference time, while fine‑tuning actually changes the model weights. With Retrieval‑Augmented Generation (RAG) you keep the pretrained LLM unchanged, query a vector database or other knowledge source, and prepend the retrieved passages to the prompt so the model can use up‑to‑date facts. Fine‑tuning, on the other hand, involves additional training on a specific dataset, updating the model parameters to alter its behavior, style, or learned patterns. Use RAG when the knowledge is dynamic or proprietary, and fine‑tuning when you need the model itself to internalize new patterns or capabilities.",
         "confidence": 0.97,
         "tools_used": [
           "search_my_notes",
@@ -373,8 +373,8 @@
         ],
         "decision_reason": "Question passed cheap checks and the LLM selected the highest-confidence action.",
         "pruned_branches": [
-          "defer",
           "ask_to_repeat",
+          "defer",
           "stay_silent"
         ],
         "remaining_branches": [
@@ -401,10 +401,10 @@
           }
         ],
         "timings": {
-          "decision_total_seconds": 0.594,
-          "decision_llm_seconds": 0.594,
-          "tool_and_graph_seconds": 0.015,
-          "answer_llm_seconds": 15.468
+          "decision_total_seconds": 0.716,
+          "decision_llm_seconds": 0.715,
+          "tool_and_graph_seconds": 0.02,
+          "answer_llm_seconds": 12.778
         }
       }
     },

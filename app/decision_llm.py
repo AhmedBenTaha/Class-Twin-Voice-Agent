@@ -48,6 +48,7 @@ def _extract_json(text: str) -> dict:
 def llm_score_question(
     question: str,
     addressed_to_me: bool,
+    has_memory: bool = False,
 ) -> tuple[dict[str, float], float]:
     """
     Ask the LLM to score possible actions.
@@ -73,6 +74,9 @@ Question:
 Explicitly addressed to Ahmed:
 {addressed_to_me}
 
+Conversation memory available:
+{has_memory}
+
 Rules:
 
 1. If the question is explicitly addressed to another person,
@@ -90,6 +94,11 @@ Rules:
    that Ahmed's knowledge pack does not contain, defer.
 
 6. If the audio/question is unclear, ask_to_repeat.
+
+7. A follow-up question may refer to an earlier turn without
+   repeating the topic keywords. If conversation memory is
+   available and the question is clearly a follow-up, prefer
+   answer over ask_to_repeat.
 
 Return ONLY valid JSON:
 
@@ -158,6 +167,7 @@ Scores must be between 0 and 1.
 def decide_with_llm(
     transcription: dict,
     threshold: float = 0.70,
+    has_memory: bool = False,
 ) -> DecisionResult:
     """
     Hybrid decision policy.
@@ -221,7 +231,10 @@ def decide_with_llm(
 
     supported = has_supported_topic(question)
 
-    if not supported:
+    # A follow-up question may not repeat the original topic.
+    # If valid conversation memory exists, allow the LLM
+    # to resolve the question using that context.
+    if not supported and not has_memory:
         return DecisionResult(
             action="defer",
             addressed_to_me=addressed_to_me,
@@ -248,6 +261,7 @@ def decide_with_llm(
     scores, decision_llm_seconds = llm_score_question(
         question=question,
         addressed_to_me=addressed_to_me,
+        has_memory=has_memory,
     )
 
     selected, pruned, remaining = prune_and_select(

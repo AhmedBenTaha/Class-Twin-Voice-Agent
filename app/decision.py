@@ -27,6 +27,8 @@ AHMED_NAMES = [
     "ahmed",
     "ahmad",
     "أحمد",
+    "طه",
+    "taha"
 ]
 
 OTHER_NAMES = [
