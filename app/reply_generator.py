@@ -14,9 +14,6 @@ from app.reply_graph import build_reply_plan
 from app.memory import RollingMemory
 
 
-# ============================================================
-# Configuration
-# ============================================================
 
 load_dotenv()
 
@@ -28,10 +25,6 @@ client = Groq(
 
 memory = RollingMemory(max_turns=5)
 
-
-# ============================================================
-# Twin Reply Schema
-# ============================================================
 
 class TwinReply(BaseModel):
     addressed_to_me: bool
@@ -74,9 +67,8 @@ class TwinReply(BaseModel):
     timings: dict[str, float] = {}
 
 
-# ============================================================
+
 # Language Detection
-# ============================================================
 
 def detect_language(
     question: str,
@@ -100,10 +92,7 @@ def detect_language(
 
     return "en"
 
-
-# ============================================================
 # Follow-up Detection
-# ============================================================
 
 def is_follow_up(question: str) -> bool:
 
@@ -151,9 +140,7 @@ def is_follow_up(question: str) -> bool:
     )
 
 
-# ============================================================
 # Prompt Construction
-# ============================================================
 
 def build_prompt(
     question: str,
@@ -382,38 +369,28 @@ def generate_answer(
     return answer, llm_seconds
 
 
-# ============================================================
 # Main Reply Pipeline
-# ============================================================
 
 def reply(
     question: str,
     quality_score: float = 1.0,
 ) -> TwinReply:
 
-    # --------------------------------------------------------
     # 1. Detect language
-    # --------------------------------------------------------
 
     language = detect_language(question)
 
-    # --------------------------------------------------------
     # 2. Detect follow-up
-    # --------------------------------------------------------
 
     follow_up = is_follow_up(question)
 
-    # --------------------------------------------------------
     # 3. Read previous memory
-    # --------------------------------------------------------
 
     previous_memory = memory.get_context()
 
     has_memory = not memory.is_empty()
 
-    # --------------------------------------------------------
     # 4. Build decision input
-    # --------------------------------------------------------
 
     decision_question = question
 
@@ -439,9 +416,7 @@ Do not invent information that is not present
 in the previous conversation.
 """
 
-    # --------------------------------------------------------
     # 5. Decision Tree
-    # --------------------------------------------------------
 
     decision_start = time.perf_counter()
 
@@ -458,9 +433,7 @@ in the previous conversation.
         3,
     )
 
-    # --------------------------------------------------------
     # Common debug data
-    # --------------------------------------------------------
 
     base_debug = {
         "decision_reason": decision.reason,
@@ -473,9 +446,7 @@ in the previous conversation.
         },
     }
 
-    # --------------------------------------------------------
     # 6. Handle STAY SILENT
-    # --------------------------------------------------------
 
     if decision.action == "stay_silent":
 
@@ -490,9 +461,7 @@ in the previous conversation.
             **base_debug,
         )
 
-    # --------------------------------------------------------
     # 7. Handle ASK TO REPEAT
-    # --------------------------------------------------------
 
     if decision.action == "ask_to_repeat":
 
@@ -525,9 +494,8 @@ in the previous conversation.
             **base_debug,
         )
 
-    # --------------------------------------------------------
     # 8. Handle DEFER
-    # --------------------------------------------------------
+    
 
     if decision.action == "defer":
 
@@ -556,9 +524,7 @@ in the previous conversation.
             **base_debug,
         )
 
-    # --------------------------------------------------------
     # 9. ANSWER BRANCH
-    # --------------------------------------------------------
 
     plan_start = time.perf_counter()
 
@@ -574,9 +540,7 @@ in the previous conversation.
 
     context = plan["tool_results"]["compose_context"]
 
-    # --------------------------------------------------------
     # 10. Generate grounded answer
-    # --------------------------------------------------------
 
     answer, llm_seconds = generate_answer(
         question=question,
@@ -585,9 +549,7 @@ in the previous conversation.
         memory_context=previous_memory,
     )
 
-    # --------------------------------------------------------
     # 11. Combine decision + answer confidence
-    # --------------------------------------------------------
 
     answer.addressed_to_me = decision.addressed_to_me
 
@@ -596,9 +558,7 @@ in the previous conversation.
         decision.confidence,
     )
 
-    # --------------------------------------------------------
     # 12. Tool call information for demo
-    # --------------------------------------------------------
 
     answer.tool_calls = [
         {
@@ -620,9 +580,7 @@ in the previous conversation.
         },
     ]
 
-    # --------------------------------------------------------
     # 13. Debug information
-    # --------------------------------------------------------
 
     answer.decision_reason = decision.reason
 
@@ -642,9 +600,7 @@ in the previous conversation.
         "tool_and_graph_seconds": plan_seconds,
         "answer_llm_seconds": llm_seconds,
     }
-    # --------------------------------------------------------
     # 14. Save successful answer to rolling memory
-    # --------------------------------------------------------
 
     memory.add(
         question=question,
@@ -654,9 +610,7 @@ in the previous conversation.
     return answer
 
 
-# ============================================================
 # Demo / Local Test
-# ============================================================
 
 if __name__ == "__main__":
 
