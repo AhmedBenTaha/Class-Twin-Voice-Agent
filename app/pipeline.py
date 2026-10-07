@@ -10,9 +10,7 @@ from app.transcribe import transcribe
 def run_pipeline(audio_path: str) -> dict:
     total_start = time.perf_counter()
 
-    # ============================================================
     # 1. Speech-to-Text
-    # ============================================================
     stt_start = time.perf_counter()
 
     transcription = transcribe(audio_path)
@@ -23,9 +21,7 @@ def run_pipeline(audio_path: str) -> dict:
     language = transcription["detected_language"]
     quality_score = transcription["quality_score"]
 
-    # ============================================================
     # 2. Decision + Reply
-    # ============================================================
     reply_start = time.perf_counter()
 
     twin_reply = reply(
@@ -40,9 +36,7 @@ def run_pipeline(audio_path: str) -> dict:
 
     reply_timings = twin_reply.timings
 
-    # ============================================================
     # 3. Speech synthesis
-    # ============================================================
     audio_output = None
 
     if twin_reply.reply_text.strip():
@@ -61,9 +55,7 @@ def run_pipeline(audio_path: str) -> dict:
     else:
         speech_seconds = 0.0
 
-    # ============================================================
     # 4. Total
-    # ============================================================
     total_seconds = round(
         time.perf_counter() - total_start,
         3,
